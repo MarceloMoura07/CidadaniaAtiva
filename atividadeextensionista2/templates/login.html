@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Cidadania Ativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Início</a></li>
+        </ul>
+    </nav>
+    <h1>CIDADANIA ATIVA</h1>
+</header>
+
+<main style="max-width: 800px; margin: 20px auto;">
+    <h2 style="text-align:center;">Acesse ou Crie sua Conta</h2>
+    <div style="display: flex; gap: 40px; justify-content: space-between;">
+
+        <!-- Login -->
+        <div style="flex: 1;">
+            <h3>Login</h3>
+            <form method="POST">
+                {{ form_login.hidden_tag() }}
+                <p>{{ form_login.email.label }}<br> {{ form_login.email(size=30) }}</p>
+                <p>{{ form_login.senha.label }}<br> {{ form_login.senha(size=30) }}</p>
+                <p>{{ form_login.lembrar_dados() }} {{ form_login.lembrar_dados.label }}</p>
+                <p>{{ form_login.botao_submit_login(class_='botao verde') }}</p>
+            </form>
+        </div>
+
+        <!-- Criar Conta -->
+        <div style="flex: 1;">
+            <h3>Criar Conta</h3>
+            <form method="POST">
+                {{ form_criarconta.hidden_tag() }}
+                <p>{{ form_criarconta.username.label }}<br> {{ form_criarconta.username(size=30) }}</p>
+                <p>{{ form_criarconta.email.label }}<br> {{ form_criarconta.email(size=30) }}</p>
+                <p>{{ form_criarconta.senha.label }}<br> {{ form_criarconta.senha(size=30) }}</p>
+                <p>{{ form_criarconta.confirmacao_senha.label }}<br> {{ form_criarconta.confirmacao_senha(size=30) }}</p>
+                <p>{{ form_criarconta.botao_submit_criarconta(class_='botao azul') }}</p>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

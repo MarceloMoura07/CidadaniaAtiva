@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ problema.titulo }} - Cidadania Ativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Início</a></li>
+            <li><a href="{{ url_for('logout') }}">Sair</a></li>
+        </ul>
+    </nav>
+    <h1>CIDADANIA ATIVA</h1>
+</header>
+
+<main style="max-width: 800px; margin: 20px auto;">
+    <h2 style="text-align:center;">{{ problema.titulo }}</h2>
+
+    <div style="background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+        <p><strong>Descrição:</strong><br>{{ problema.descricao }}</p>
+        <p><strong>Endereço:</strong><br>{{ problema.endereco }}</p>
+        <p><strong>Postado em:</strong> {{ problema.data_criacao.strftime('%d/%m/%Y') }}</p>
+        <p><strong>Postado por:</strong> {{ problema.autor.username }}</p>
+
+        <div class="botoes-validacao" style="margin-top: 20px;">
+            <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
+                <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
+            </form>
+            <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='nao_existe') }}" method="POST">
+                <button class="botao vermelho">✘ {{ problema.contar_validacoes('nao_existe') }}<br>NÃO EXISTE</button>
+            </form>
+        </div>
+
+        <p class="pergunta-validacao" style="text-align:center;">O problema ainda existe no local?</p>
+
+        {% if current_user.is_authenticated and current_user == problema.autor %}
+            <hr>
+            <p style="text-align:right;">
+                <a href="#" class="botao azul">Editar</a>
+                <a href="#" class="botao vermelho">Excluir</a>
+            </p>
+        {% endif %}
+    </div>
+</main>
+
+</body>
+</html>

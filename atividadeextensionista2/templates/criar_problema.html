@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Problema - Cidadania Ativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Início</a></li>
+            <li><a href="{{ url_for('logout') }}">Sair</a></li>
+        </ul>
+    </nav>
+    <h1>CIDADANIA ATIVA</h1>
+</header>
+
+<main style="max-width: 600px; margin: 20px auto;">
+    <h2 style="text-align:center;">Registrar Novo Problema</h2>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>{{ form.titulo.label }}<br>
+           {{ form.titulo(size=60) }}</p>
+
+        <p>{{ form.descricao.label }}<br>
+           {{ form.descricao(rows=5, cols=60) }}</p>
+
+        <p>{{ form.endereco.label }}<br>
+           {{ form.endereco(size=60) }}</p>
+
+        <p style="text-align:center;">{{ form.botao_submit(class_="botao verde") }}</p>
+    </form>
+</main>
+
+</body>
+</html>
