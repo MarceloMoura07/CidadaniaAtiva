@@ -14,44 +14,59 @@
             <li><a href="#">Usuários</a></li>
             <li><a href="#">Contato</a></li>
             <li style="float:right;"><a href="{{ url_for('login') }}">Login</a></li>
-            <li style="float:right;"><a href="{{ url_for('login') }}">Criar Conta</a></li>
         </ul>
     </nav>
     <h1>CIDADANIA ATIVA</h1>
+    {% if current_user.is_authenticated %}
+    <div style="text-align:center; margin-top: 10px;">
+        <a href="{{ url_for('criar_problema') }}" class="botao verde">+ Registrar Novo Problema</a>
+    </div>
+{% endif %}
+
 </header>
 
 <main>
     {% for problema in problemas %}
-    <section class="card-problema">
-        <div class="coluna-usuario">
-            <img src="{{ url_for('static', filename='fotos_perfil/' + problema.autor.foto_perfil) }}" class="foto-perfil">
-            <p><strong>{{ problema.autor.username }}</strong></p>
-            <p>{{ problema.autor.problemas|length }} Postagens</p>
-            <p>{{ problema.autor.validacoes|length }} Curtidas</p>
-        </div>
-
-        <div class="coluna-imagem">
-            <h2>{{ problema.titulo }}</h2>
-            <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema">
-            <p class="data-postagem">Postado em {{ problema.data_criacao.strftime('%d %b %Y') }}</p>
-
-            <div class="botoes-validacao">
-                <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
-                    <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
-                </form>
-                <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='nao_existe') }}" method="POST">
-                    <button class="botao vermelho">✘ {{ problema.contar_validacoes('nao_existe') }}<br>NÃO EXISTE</button>
-                </form>
+    <div class="fundo-cinza">
+        <section class="card-problema">
+    <!-- Coluna dos logos -->
+            <div class="coluna-patrocinio">
+                <div class="patrocinadores">
+                    <img src="{{ url_for('static', filename='logos/logo1.png') }}">
+                    <img src="{{ url_for('static', filename='logos/logo2.png') }}">
+                    <img src="{{ url_for('static', filename='logos/logo3.png') }}">
+                    <!-- Até 9 logos -->
+                </div>
             </div>
 
-            <p class="pergunta-validacao">O problema ainda existe no local?</p>
-        </div>
+            <!-- Coluna da imagem e botões -->
+            <div class="coluna-imagem">
+                <h2>{{ problema.titulo }}</h2>
+                <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema">
+                <p class="data-postagem">
+                    Postado em {{ problema.data_criacao.strftime('%d %b %Y') }} por {{ problema.autor.username }}
+                </p>
 
-        <div class="coluna-descricao">
-            <p>{{ problema.descricao }}</p>
-            <p><strong>{{ problema.endereco }}</strong></p>
-        </div>
-    </section>
+                <div class="botoes-validacao">
+                    <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
+                        <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
+                    </form>
+                    <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='nao_existe') }}" method="POST">
+                        <button class="botao vermelho">✘ {{ problema.contar_validacoes('nao_existe') }}<br>NÃO EXISTE</button>
+                    </form>
+                </div>
+
+                <p class="pergunta-validacao">O problema ainda existe no local?</p>
+            </div>
+
+            <!-- Coluna da descrição -->
+            <div class="coluna-descricao">
+                <p>{{ problema.descricao }}</p>
+                <p><strong>{{ problema.endereco }}</strong></p>
+            </div>
+        </section>
+
+    </div>
     {% endfor %}
 </main>
 

@@ -1,6 +1,6 @@
 from atividadeextensionista2 import database, login_manager
 from flask_login import UserMixin
-import datetime
+from datetime import datetime
 
 @login_manager.user_loader
 def load_usuario(id_usuario):
@@ -21,11 +21,16 @@ class Problema(database.Model):
     titulo = database.Column(database.String, nullable=False)
     descricao = database.Column(database.Text, nullable=False)
     endereco = database.Column(database.String, nullable=False)
-    data_criacao = database.Column(database.DateTime, default=datetime.datetime.utcnow)
-    status = database.Column(database.String, default='ativo')  # ativo ou resolvido
+    imagem = database.Column(database.String, default='sem_imagem.jpg')
+    data_criacao = database.Column(database.DateTime, default=datetime.utcnow)
+    status = database.Column(database.String, default='ativo')
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
 
     validacoes = database.relationship('Validacao', backref='problema', lazy=True)
+
+    def contar_validacoes(self, tipo):
+        return len([v for v in self.validacoes if v.tipo == tipo])
+
 
 class Validacao(database.Model):
     id = database.Column(database.Integer, primary_key=True)

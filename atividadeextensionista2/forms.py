@@ -23,6 +23,7 @@ class FormCriarProblema(FlaskForm):
     titulo = StringField('Título do problema', validators=[DataRequired(), Length(max=100)])
     descricao = TextAreaField('Descrição detalhada', validators=[DataRequired()])
     endereco = StringField('Endereço do problema', validators=[DataRequired()])
+    imagem = FileField('Foto do problema', validators=[FileAllowed(['jpg', 'png'])])
     botao_submit = SubmitField('Registrar problema')
 
 # Formulário de edição de perfil

@@ -3,11 +3,31 @@ from atividadeextensionista2 import app, database, bcrypt
 from atividadeextensionista2.forms import FormLogin, FormCriarConta, FormCriarProblema
 from atividadeextensionista2.models import Usuario, Problema
 from flask_login import login_user, logout_user, current_user, login_required
+from atividadeextensionista2.models import Validacao
+import secrets
+from PIL import Image
+import os
 
+
+def salvar_imagem_problema(imagem):
+    nome_aleatorio = secrets.token_hex(8)
+    nome, extensao = os.path.splitext(imagem.filename)
+    nome_arquivo = nome_aleatorio + extensao
+    caminho = os.path.join(app.root_path, 'static/imagens_problemas', nome_arquivo)
+
+    img = Image.open(imagem)
+    img.thumbnail((800, 800))  # redimensiona
+    img.save(caminho)
+
+    return nome_arquivo
 
 @app.route('/')
 def home():
-    problemas = Problema.query.order_by(Problema.id.desc()).all()
+    problemas = Problema.query.all()
+
+    # Ordena primeiro por número de "existe", depois por data (mais recente primeiro)
+    problemas = sorted(problemas, key=lambda p: (p.contar_validacoes('existe'), p.data_criacao), reverse=True)
+
     return render_template('home.html', problemas=problemas)
 
 
@@ -53,10 +73,15 @@ def logout():
 def criar_problema():
     form = FormCriarProblema()
     if form.validate_on_submit():
+        nome_imagem = 'sem_imagem.jpg'
+        if form.imagem.data:
+            nome_imagem = salvar_imagem_problema(form.imagem.data)
+
         novo_problema = Problema(
             titulo=form.titulo.data,
             descricao=form.descricao.data,
             endereco=form.endereco.data,
+            imagem=nome_imagem,
             autor=current_user
         )
         database.session.add(novo_problema)
@@ -71,3 +96,36 @@ def criar_problema():
 def exibir_problema(id):
     problema = Problema.query.get_or_404(id)
     return render_template('problema.html', problema=problema)
+
+
+@app.route('/problema/<int:id_problema>/validar/<tipo>', methods=['POST'])
+@login_required
+def validar_problema(id_problema, tipo):
+    problema = Problema.query.get_or_404(id_problema)
+
+    # Evita votos duplicados
+    validacao_existente = Validacao.query.filter_by(
+        id_usuario=current_user.id,
+        id_problema=problema.id
+    ).first()
+
+    if validacao_existente:
+        flash('Você já avaliou este problema.', 'alert-warning')
+    else:
+        nova_validacao = Validacao(
+            id_usuario=current_user.id,
+            id_problema=problema.id,
+            tipo=tipo
+        )
+        database.session.add(nova_validacao)
+        database.session.commit()
+        if problema.contar_validacoes('nao_existe') >= 3:
+            database.session.delete(problema)
+            database.session.commit()
+            flash('O problema foi removido após múltiplas negações.', 'alert-warning')
+            return redirect(url_for('home'))
+
+        flash('Obrigado por sua colaboração!', 'alert-success')
+
+    return redirect(url_for('home'))
+
