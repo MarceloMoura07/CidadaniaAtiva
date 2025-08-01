@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Cidadania Ativa{% endblock %}
+
+{% block content %}
+
+<main style="max-width: 800px; margin: 40px auto;" class="fundo-cinza">
+    <h2 style="text-align: center;">Top 5 Usuários Ativos</h2>
+    <p style="text-align: center;">Total de usuários cadastrados: {{ total }}</p>
+
+    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #e0e0e0;">
+                <th style="padding: 8px;">Nome</th>
+                <th style="padding: 8px;">Postagens Feitas</th>
+                <th style="padding: 8px;">Interações Feitas</th>
+                <th style="padding: 8px;">Última Postagem</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in top_usuarios %}
+            <tr style="text-align: center;">
+                <td style="padding: 8px;">{{ usuario.username }}</td>
+                <td>{{ usuario.problemas|length }}</td>
+                <td>{{ usuario.validacoes|length }}</td>
+                <td>
+                    {% set ultima_postagem = usuario.problemas | sort(attribute='data_criacao') | reverse | first %}
+                    {{ ultima_postagem.data_criacao.strftime('%d/%m/%Y') }}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}

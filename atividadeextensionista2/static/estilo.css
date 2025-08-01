@@ -191,4 +191,51 @@ main {
     border-radius: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
+#flash-messages {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
 
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    animation: fadeOut 1s ease-in-out 3s forwards;
+}
+
+/* Tipos de alertas */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+/* Animação para sumir */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

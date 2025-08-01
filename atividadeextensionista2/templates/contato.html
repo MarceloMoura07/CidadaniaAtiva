@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Contato - Cidadania Ativa{% endblock %}
+
+{% block content %}
+
+<main style="max-width: 600px; margin: 40px auto;" class="fundo-cinza">
+    <h2 style="text-align:center;">Contato</h2>
+    <p style="text-align:center; font-size: 16px;">
+        Para críticas, sugestões ou informações, envie um e-mail para:
+    </p>
+    <p style="text-align:center; margin-top: 20px;">
+    <script>
+        const user = "prmarcelofmoura";
+        const domain = "yahoo.com.br";
+        const email = user + "@" + domain;
+        document.write('<a href="mailto:' + email + '" class="botao verde">' + email + '</a>');
+    </script>
+    <noscript>Ative o JavaScript para ver o e-mail.</noscript>
+</p>
+
+</main>
+
+{% endblock %}

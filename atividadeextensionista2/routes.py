@@ -1,9 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from atividadeextensionista2 import app, database, bcrypt
 from atividadeextensionista2.forms import FormLogin, FormCriarConta, FormCriarProblema
-from atividadeextensionista2.models import Usuario, Problema
+from atividadeextensionista2.models import Usuario, Problema, Validacao
 from flask_login import login_user, logout_user, current_user, login_required
-from atividadeextensionista2.models import Validacao
 import secrets
 from PIL import Image
 import os
@@ -66,6 +65,35 @@ def logout():
     logout_user()
     flash('Logout realizado com sucesso.', 'alert-success')
     return redirect(url_for('home'))
+
+
+@app.route('/usuarios')
+def usuarios():
+    # Todos os usuários cadastrados
+    todos_usuarios = Usuario.query.all()
+
+    # Filtra usuários que já postaram pelo menos uma vez
+    usuarios_com_post = [u for u in todos_usuarios if u.problemas]
+
+    # Ordena os que postaram pela data da última postagem (mais recente primeiro)
+    top_usuarios = sorted(
+        usuarios_com_post,
+        key=lambda u: max(p.data_criacao for p in u.problemas),
+        reverse=True
+    )[:5]  # pega só os 5 mais recentes
+
+    total_cadastrados = len(todos_usuarios)
+
+    return render_template("usuarios.html", top_usuarios=top_usuarios, total=total_cadastrados)
+
+
+@app.route('/contato')
+def contato():
+    return render_template('contato.html')
+
+@app.route('/sobre')
+def sobre():
+    return render_template('sobre.html')
 
 
 @app.route('/problema/criar', methods=['GET', 'POST'])

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Cidadania Ativa{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+<!-- ALERTAS FLUTUANTES CENTRAIS -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div id="flash-messages">
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- MENU SUPERIOR -->
+<nav>
+    <ul class="menu">
+        <li><a href="{{ url_for('home') }}">Início</a></li>
+        <li><a href="{{ url_for('usuarios') }}">Usuários</a></li>
+        <li><a href="{{ url_for('contato') }}">Contato</a></li>
+        <li><a href="{{ url_for('sobre') }}">Sobre</a></li>
+        {% if current_user.is_authenticated %}
+            <li style="float:right;"><a href="{{ url_for('logout') }}">Sair</a></li>
+        {% else %}
+            <li style="float:right;"><a href="{{ url_for('login') }}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- TÍTULO CENTRALIZADO -->
+<header>
+    <h1 style="text-align: center;">CIDADANIA ATIVA</h1>
+
+    {% if current_user.is_authenticated %}
+        <div style="text-align: center; margin-top: 10px;">
+            <a href="{{ url_for('criar_problema') }}" class="botao verde">+ Registrar Novo Problema</a>
+        </div>
+    {% endif %}
+</header>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- SCRIPT PARA OCULTAR FLASH -->
+<script>
+  setTimeout(function () {
+    var alertBox = document.getElementById('flash-messages');
+    if (alertBox) {
+      alertBox.style.display = 'none';
+    }
+  }, 4000);
+</script>
+
+</body>
+</html>

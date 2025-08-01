@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cidadania Ativa</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<header>
-    <nav>
-        <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Início</a></li>
-            <li><a href="#">Usuários</a></li>
-            <li><a href="#">Contato</a></li>
-            <li style="float:right;"><a href="{{ url_for('login') }}">Login</a></li>
-        </ul>
-    </nav>
-    <h1>CIDADANIA ATIVA</h1>
-    {% if current_user.is_authenticated %}
-    <div style="text-align:center; margin-top: 10px;">
-        <a href="{{ url_for('criar_problema') }}" class="botao verde">+ Registrar Novo Problema</a>
-    </div>
-{% endif %}
+{% block title %}Início - Cidadania Ativa{% endblock %}
 
-</header>
+{% block content %}
+<!-- conteúdo da home -->
 
 <main>
     {% for problema in problemas %}
@@ -70,5 +50,5 @@
     {% endfor %}
 </main>
 
-</body>
-</html>
+
+{% endblock %}

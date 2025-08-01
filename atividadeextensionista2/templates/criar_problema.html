@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar Problema - Cidadania Ativa</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<header>
-    <nav>
-        <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Início</a></li>
-            <li><a href="{{ url_for('logout') }}">Sair</a></li>
-        </ul>
-    </nav>
-    <h1>CIDADANIA ATIVA</h1>
-</header>
+{% block title %}Criar Problema - Cidadania Ativa{% endblock %}
+
+{% block content %}
 
 <main style="max-width: 600px; margin: 20px auto;">
     <div class="fundo-cinza">
@@ -34,5 +21,4 @@
     </div>
 </main>
 
-</body>
-</html>
+{% endblock %}

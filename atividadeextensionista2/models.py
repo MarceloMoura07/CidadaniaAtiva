@@ -26,7 +26,12 @@ class Problema(database.Model):
     status = database.Column(database.String, default='ativo')
     id_usuario = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
 
-    validacoes = database.relationship('Validacao', backref='problema', lazy=True)
+    validacoes = database.relationship(
+        'Validacao',
+        backref='problema',
+        lazy=True,
+        cascade='all, delete-orphan'
+    )
 
     def contar_validacoes(self, tipo):
         return len([v for v in self.validacoes if v.tipo == tipo])

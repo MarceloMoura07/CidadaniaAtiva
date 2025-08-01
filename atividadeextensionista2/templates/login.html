@@ -1,25 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Cidadania Ativa</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<header>
-    <nav>
-        <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Início</a></li>
-        </ul>
-    </nav>
-    <h1>CIDADANIA ATIVA</h1>
-</header>
+{% block title %}Login - Cidadania Ativa{% endblock %}
+
+{% block content %}
 
 <main style="max-width: 800px; margin: 20px auto;">
+    <div class="fundo-cinza">
     <h2 style="text-align:center;">Acesse ou Crie sua Conta</h2>
     <div style="display: flex; gap: 40px; justify-content: space-between;">
-    <div class="fundo-cinza">
+
         <!-- Login -->
         <div style="flex: 1;">
             <h3>Login</h3>
@@ -48,5 +37,4 @@
     </div>
 </main>
 
-</body>
-</html>
+{% endblock %}
