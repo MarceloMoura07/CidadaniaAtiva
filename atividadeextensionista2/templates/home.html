@@ -3,52 +3,51 @@
 {% block title %}Início - Cidadania Ativa{% endblock %}
 
 {% block content %}
-<!-- conteúdo da home -->
-
 <main>
     {% for problema in problemas %}
     <div class="fundo-cinza">
         <section class="card-problema">
-    <!-- Coluna dos logos -->
-            <div class="coluna-patrocinio">
-                <div class="patrocinadores">
-                    <img src="{{ url_for('static', filename='logos/logo1.png') }}">
-                    <img src="{{ url_for('static', filename='logos/logo2.png') }}">
-                    <img src="{{ url_for('static', filename='logos/logo3.png') }}">
-                    <!-- Até 9 logos -->
-                </div>
-            </div>
+            <div class="conteudo-grid">
 
-            <!-- Coluna da imagem e botões -->
-            <div class="coluna-imagem">
-                <h2>{{ problema.titulo }}</h2>
-                <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema">
-                <p class="data-postagem">
-                    Postado em {{ problema.data_criacao.strftime('%d %b %Y') }} por {{ problema.autor.username }}
-                </p>
-
-                <div class="botoes-validacao">
-                    <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
-                        <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
-                    </form>
-                    <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='nao_existe') }}" method="POST">
-                        <button class="botao vermelho">✘ {{ problema.contar_validacoes('nao_existe') }}<br>NÃO EXISTE</button>
-                    </form>
+                <!-- Coluna dos logos -->
+                <div class="coluna-patrocinio">
+                    <div class="patrocinadores">
+                        <img src="{{ url_for('static', filename='logos/logo1.png') }}" alt="Logo 1">
+                        <img src="{{ url_for('static', filename='logos/logo2.png') }}" alt="Logo 2">
+                        <img src="{{ url_for('static', filename='logos/logo3.png') }}" alt="Logo 3">
+                    </div>
                 </div>
 
-                <p class="pergunta-validacao">O problema ainda existe no local?</p>
-            </div>
+                <!-- Coluna da imagem -->
+                <div class="coluna-imagem">
+                    <h2>{{ problema.titulo }}</h2>
+                    <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema" alt="Imagem do problema">
 
-            <!-- Coluna da descrição -->
-            <div class="coluna-descricao">
-                <p>{{ problema.descricao }}</p>
-                <p><strong>{{ problema.endereco }}</strong></p>
-            </div>
+                    <p class="data-postagem">
+                        Postado em {{ problema.data_criacao.strftime('%d %b %Y') }} por {{ problema.autor.username }}
+                    </p>
+
+                    <div class="botoes-validacao">
+                        <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
+                            <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
+                        </form>
+                        <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='nao_existe') }}" method="POST">
+                            <button class="botao vermelho">✘ {{ problema.contar_validacoes('nao_existe') }}<br>NÃO EXISTE</button>
+                        </form>
+                    </div>
+
+                    <p class="pergunta-validacao">O problema ainda existe no local?</p>
+                </div>
+
+                <!-- Coluna da descrição -->
+                <div class="coluna-descricao">
+                    <p>{{ problema.descricao }}</p>
+                    <p><strong>{{ problema.endereco }}</strong></p>
+                </div>
+
+            </div> <!-- /.conteudo-grid -->
         </section>
-
     </div>
     {% endfor %}
 </main>
-
-
 {% endblock %}

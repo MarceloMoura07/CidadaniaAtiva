@@ -1,14 +1,18 @@
-body {
+html, body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: url("../static/fundo.jpg") no-repeat center center fixed;
     background-size: cover;
+    width: 100%;
+    overflow-x: hidden;
 }
 
+/* Cabeçalho */
 header {
     background-color: #e9e9e9;
     padding: 10px 0;
     text-align: center;
+    width: 100%;
 }
 
 header h1 {
@@ -21,6 +25,8 @@ header h1 {
 /* Menu superior */
 nav {
     background-color: #dcdcdc;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 nav ul.menu {
@@ -47,25 +53,25 @@ nav ul.menu li a:hover {
     background-color: #bbb;
 }
 
-/* Container principal dos cards */
+/* Container principal */
 main {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 10px;
 }
 
-/* Card de cada problema */
+/* Card de problema */
 .card-problema {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 150px 800px 1fr;
     gap: 20px;
+    align-items: start;
     background-color: white;
     padding: 20px;
     margin-bottom: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-
 
 /* Coluna do usuário */
 .coluna-usuario {
@@ -75,16 +81,10 @@ main {
     border-radius: 8px;
 }
 
-.foto-perfil {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Coluna do problema */
+/* Coluna da imagem */
 .coluna-imagem {
     text-align: center;
+    margin-left: -250px;
 }
 
 .coluna-imagem h2 {
@@ -92,11 +92,11 @@ main {
 }
 
 .imagem-problema {
-    width: 100%;
-    max-height: 250px;
+    width: 50%;
+    height: 250px;
     object-fit: cover;
-    margin: 10px 0;
     border-radius: 5px;
+    margin: 10px 0;
 }
 
 .data-postagem {
@@ -104,8 +104,60 @@ main {
     color: #333;
     margin-bottom: 10px;
 }
+.tabela-usuarios {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
 
-/* Botões de validação */
+.tabela-usuarios th,
+.tabela-usuarios td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.tabela-usuarios th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+.relatorio-problema-bloco {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.relatorio-problema-conteudo {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.relatorio-problema-info {
+    flex: 1;
+    min-width: 220px;
+}
+
+.relatorio-problema-conteudo img.imagem-problema {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+form p, form div {
+    font-size: 15px;
+    color: #333;
+}
+
+
+/* Botões */
 .botoes-validacao {
     display: flex;
     justify-content: center;
@@ -127,7 +179,6 @@ main {
 .botao:hover {
     background-color: #246e46;
 }
-
 
 .verde {
     background-color: #2e8b57;
@@ -157,16 +208,25 @@ main {
     border-radius: 8px;
     font-size: 14px;
     color: #333;
+    margin-left: -260px;
+    max-width: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
 }
 
+/* Card com fundo cinza */
 .fundo-cinza {
     background-color: rgba(240, 240, 240, 0.9);
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 30px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Coluna de patrocinadores */
 .coluna-patrocinio {
     background-color: #f4f4f4;
     padding: 10px;
@@ -191,6 +251,8 @@ main {
     border-radius: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
+
+/* Mensagens de alerta */
 #flash-messages {
     position: fixed;
     top: 50%;
@@ -211,7 +273,6 @@ main {
     animation: fadeOut 1s ease-in-out 3s forwards;
 }
 
-/* Tipos de alertas */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
@@ -232,10 +293,77 @@ main {
     color: #004085;
 }
 
-/* Animação para sumir */
 @keyframes fadeOut {
     to {
         opacity: 0;
         visibility: hidden;
+    }
+}
+
+/* Layout das colunas */
+.conteudo-grid {
+    display: grid;
+    grid-template-columns: 250px 800px 250px;
+    gap: 20px;
+    align-items: stretch;
+}
+
+/* Responsivo */
+@media screen and (max-width: 768px) {
+    .conteudo-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .card-problema {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+        margin: 15px 0;
+        box-sizing: border-box;
+    }
+
+    .coluna-patrocinio,
+    .coluna-imagem,
+    .coluna-descricao {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+    }
+
+    .imagem-problema {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+    }
+
+    .data-postagem,
+    .pergunta-validacao {
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-align: center;
+        font-size: 14px;
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+
+    .botoes-validacao {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .botao {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .fundo-cinza {
+        margin: 10px;
+        padding: 15px;
+        width: auto;
+        box-sizing: border-box;
     }
 }

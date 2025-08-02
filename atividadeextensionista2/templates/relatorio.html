@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Relatório de Problemas - Cidadania Ativa{% endblock %}
+
+{% block content %}
+<main class="fundo-cinza" style="max-width: 1000px; margin: 40px auto; padding: 30px;">
+    <h2 style="text-align: center;">Relatório Cidadania Ativa</h2>
+
+    <!-- Introdução -->
+    <section style="margin-top: 20px;">
+        <p style="text-align: justify; font-size: 15px;">
+            Prezado(a) responsável público(a),
+        </p>
+        <p style="text-align: justify; font-size: 15px;">
+            Este relatório é uma iniciativa da comunidade local com o objetivo de identificar problemas urbanos ainda não resolvidos e priorizá-los com base na participação dos próprios cidadãos. A plataforma <strong>Cidadania Ativa</strong> permite que moradores registrem situações como buracos, entulho, iluminação pública defeituosa, entre outros, e que outros validem se o problema ainda persiste.
+        </p>
+        <p style="text-align: justify; font-size: 15px;">
+            Acreditamos que este material pode colaborar com o trabalho de fiscalização, planejamento e resposta das secretarias municipais e da Câmara de Vereadores. Esperamos que este canal de participação cidadã possa se transformar em ações concretas em prol do bem comum.
+        </p>
+
+        <p style="text-align: right; font-style: italic; margin-top: 30px;">
+            Atenciosamente,<br>
+            Plataforma Cidadania Ativa
+        </p>
+    </section>
+
+    <hr style="margin: 40px 0;">
+
+    <!-- Lista de problemas -->
+    <h3 style="text-align: center;">Problemas mais relatados pelos moradores</h3>
+
+    {% for problema in problemas %}
+    <section class="relatorio-problema-bloco">
+        <h4 style="text-align: center;">{{ problema.titulo }}</h4>
+
+        <div class="relatorio-problema-conteudo">
+            <!-- Imagem -->
+            <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema">
+
+            <!-- Informações -->
+            <div class="relatorio-problema-info">
+                <p><strong>Endereço:</strong> {{ problema.endereco }}</p>
+                <p><strong>Descrição:</strong> {{ problema.descricao }}</p>
+                <p><strong>Registrado por:</strong> {{ problema.autor.username }} em {{ problema.data_criacao.strftime('%d/%m/%Y') }}</p>
+                <p><strong>Confirmações “existe ainda”:</strong> {{ problema.contar_validacoes('existe') }}</p>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+    <!-- Botão PDF -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="window.print()" class="botao verde">📄 Gerar PDF do Relatório</button>
+    </div>
+</main>
+{% endblock %}
+

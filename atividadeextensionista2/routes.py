@@ -7,6 +7,7 @@ import secrets
 from PIL import Image
 import os
 
+# ========== Funções auxiliares ==========
 
 def salvar_imagem_problema(imagem):
     nome_aleatorio = secrets.token_hex(8)
@@ -15,17 +16,23 @@ def salvar_imagem_problema(imagem):
     caminho = os.path.join(app.root_path, 'static/imagens_problemas', nome_arquivo)
 
     img = Image.open(imagem)
-    img.thumbnail((800, 800))  # redimensiona
+    img.thumbnail((800, 800))
     img.save(caminho)
 
     return nome_arquivo
+
+# ========== Rotas principais ==========
 
 @app.route('/')
 def home():
     problemas = Problema.query.all()
 
-    # Ordena primeiro por número de "existe", depois por data (mais recente primeiro)
-    problemas = sorted(problemas, key=lambda p: (p.contar_validacoes('existe'), p.data_criacao), reverse=True)
+    # Ordena por número de "existe" e depois por data mais recente
+    problemas = sorted(
+        problemas,
+        key=lambda p: (p.contar_validacoes('existe'), p.data_criacao),
+        reverse=True
+    )
 
     return render_template('home.html', problemas=problemas)
 
@@ -66,26 +73,7 @@ def logout():
     flash('Logout realizado com sucesso.', 'alert-success')
     return redirect(url_for('home'))
 
-
-@app.route('/usuarios')
-def usuarios():
-    # Todos os usuários cadastrados
-    todos_usuarios = Usuario.query.all()
-
-    # Filtra usuários que já postaram pelo menos uma vez
-    usuarios_com_post = [u for u in todos_usuarios if u.problemas]
-
-    # Ordena os que postaram pela data da última postagem (mais recente primeiro)
-    top_usuarios = sorted(
-        usuarios_com_post,
-        key=lambda u: max(p.data_criacao for p in u.problemas),
-        reverse=True
-    )[:5]  # pega só os 5 mais recentes
-
-    total_cadastrados = len(todos_usuarios)
-
-    return render_template("usuarios.html", top_usuarios=top_usuarios, total=total_cadastrados)
-
+# ========== Páginas informativas ==========
 
 @app.route('/contato')
 def contato():
@@ -95,11 +83,32 @@ def contato():
 def sobre():
     return render_template('sobre.html')
 
+# ========== Usuários ==========
+
+@app.route('/usuarios')
+def usuarios():
+    todos_usuarios = Usuario.query.all()
+
+    usuarios_com_post = [u for u in todos_usuarios if u.problemas]
+
+    # Ordena pela última data de postagem (descendente)
+    top_usuarios = sorted(
+        usuarios_com_post,
+        key=lambda u: max(p.data_criacao for p in u.problemas),
+        reverse=True
+    )[:5]
+
+    total_cadastrados = len(todos_usuarios)
+
+    return render_template("usuarios.html", top_usuarios=top_usuarios, total=total_cadastrados)
+
+# ========== Problemas ==========
 
 @app.route('/problema/criar', methods=['GET', 'POST'])
 @login_required
 def criar_problema():
     form = FormCriarProblema()
+
     if form.validate_on_submit():
         nome_imagem = 'sem_imagem.jpg'
         if form.imagem.data:
@@ -131,14 +140,15 @@ def exibir_problema(id):
 def validar_problema(id_problema, tipo):
     problema = Problema.query.get_or_404(id_problema)
 
-    # Evita votos duplicados
+    # Impede votos repetidos do mesmo tipo
     validacao_existente = Validacao.query.filter_by(
         id_usuario=current_user.id,
-        id_problema=problema.id
+        id_problema=problema.id,
+        tipo=tipo
     ).first()
 
     if validacao_existente:
-        flash('Você já avaliou este problema.', 'alert-warning')
+        flash('Você já marcou essa opção.', 'alert-warning')
     else:
         nova_validacao = Validacao(
             id_usuario=current_user.id,
@@ -147,7 +157,11 @@ def validar_problema(id_problema, tipo):
         )
         database.session.add(nova_validacao)
         database.session.commit()
+
+        # Remove problema se houver 3 negações
         if problema.contar_validacoes('nao_existe') >= 3:
+            for v in problema.validacoes:
+                database.session.delete(v)
             database.session.delete(problema)
             database.session.commit()
             flash('O problema foi removido após múltiplas negações.', 'alert-warning')
@@ -157,3 +171,31 @@ def validar_problema(id_problema, tipo):
 
     return redirect(url_for('home'))
 
+@app.route('/problema/<int:id>/editar', methods=['GET', 'POST'])
+@login_required
+def editar_problema(id):
+    # lógica para edição
+    pass
+
+@app.route('/problema/<int:id>/excluir', methods=['POST'])
+@login_required
+def excluir_problema(id):
+    # lógica para exclusão com segurança
+    pass
+
+
+
+# ========== Relatório ==========
+
+@app.route('/relatorio')
+@login_required
+def relatorio():
+    problemas = Problema.query.filter_by(status='ativo').all()
+
+    problemas_ordenados = sorted(
+        problemas,
+        key=lambda p: p.contar_validacoes('existe'),
+        reverse=True
+    )
+
+    return render_template('relatorio.html', problemas=problemas_ordenados)

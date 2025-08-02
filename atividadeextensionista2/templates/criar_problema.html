@@ -3,22 +3,38 @@
 {% block title %}Criar Problema - Cidadania Ativa{% endblock %}
 
 {% block content %}
-
-<main style="max-width: 600px; margin: 20px auto;">
+<main style="max-width: 600px; margin: 30px auto;">
     <div class="fundo-cinza">
-    <h2 style="text-align:center;">Registrar Novo Problema</h2>
+        <h2 style="text-align: center;">Registrar Novo Problema</h2>
 
-    <form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
 
-    <p>{{ form.titulo.label }}<br>{{ form.titulo(size=60) }}</p>
-    <p>{{ form.descricao.label }}<br>{{ form.descricao(rows=5, cols=60) }}</p>
-    <p>{{ form.endereco.label }}<br>{{ form.endereco(size=60) }}</p>
-    <p>{{ form.imagem.label }}<br>{{ form.imagem() }}</p>
+            <div style="margin-bottom: 15px;">
+                {{ form.titulo.label }}<br>
+                {{ form.titulo(size=60) }}
+            </div>
 
-    <p style="text-align:center;">{{ form.botao_submit(class_="botao verde") }}</p>
-    </form>
+            <div style="margin-bottom: 15px;">
+                {{ form.descricao.label }}<br>
+                {{ form.descricao(rows=5, cols=60) }}
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                {{ form.endereco.label }}<br>
+                {{ form.endereco(size=60) }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                {{ form.imagem.label }}<br>
+                {{ form.imagem() }}
+            </div>
+
+            <div style="text-align: center;">
+                {{ form.botao_submit(class_='botao verde') }}
+            </div>
+        </form>
     </div>
 </main>
-
 {% endblock %}
+

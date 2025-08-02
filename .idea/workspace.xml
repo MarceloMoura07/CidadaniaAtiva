@@ -4,20 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c882956d-64d7-4eed-8618-e1f2a5ebe8cf" name="Changes" comment="Base do app">
-      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/contato.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/sobre.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/usuarios.html" afterDir="false" />
+    <list default="true" id="c882956d-64d7-4eed-8618-e1f2a5ebe8cf" name="Changes" comment="Inclusão de páginas: usuário e contato">
+      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/relatorio.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/static/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/static/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/static/imagens_problemas/sem_imagem.jpg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/static/imagens_problemas/sem_imagem.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/criar_problema.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/criar_problema.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/problema.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/problema.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,18 +57,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.main.executor": "Run",
-    "Python.models.executor": "Run",
-    "Python.routes.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.models.executor&quot;: &quot;Run&quot;,
+    &quot;Python.routes.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Marcelo e Raquel\PycharmProjects\CidadaniaAtiva\atividadeextensionista2\static\logos" />
@@ -108,12 +107,21 @@
       <option name="project" value="LOCAL" />
       <updated>1753839791895</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Inclusão de páginas: usuário e contato">
+      <option name="closed" value="true" />
+      <created>1754015751297</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754015751297</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit inicial" />
     <MESSAGE value="Base do app" />
-    <option name="LAST_COMMIT_MESSAGE" value="Base do app" />
+    <MESSAGE value="Inclusão de páginas: usuário e contato" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inclusão de páginas: usuário e contato" />
   </component>
 </project>

@@ -3,16 +3,16 @@
 {% block title %}Problema - Cidadania Ativa{% endblock %}
 
 {% block content %}
-
 <main style="max-width: 800px; margin: 20px auto;">
-    <h2 style="text-align:center;">{{ problema.titulo }}</h2>
+    <h2 style="text-align: center;">{{ problema.titulo }}</h2>
 
-    <div style="background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+    <div class="fundo-cinza" style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
         <p><strong>Descrição:</strong><br>{{ problema.descricao }}</p>
         <p><strong>Endereço:</strong><br>{{ problema.endereco }}</p>
         <p><strong>Postado em:</strong> {{ problema.data_criacao.strftime('%d/%m/%Y') }}</p>
         <p><strong>Postado por:</strong> {{ problema.autor.username }}</p>
 
+        <!-- Botões de validação -->
         <div class="botoes-validacao" style="margin-top: 20px;">
             <form action="{{ url_for('validar_problema', id_problema=problema.id, tipo='existe') }}" method="POST">
                 <button class="botao verde">✔ {{ problema.contar_validacoes('existe') }}<br>EXISTE AINDA</button>
@@ -22,16 +22,17 @@
             </form>
         </div>
 
-        <p class="pergunta-validacao" style="text-align:center;">O problema ainda existe no local?</p>
+        <p class="pergunta-validacao" style="text-align: center;">O problema ainda existe no local?</p>
 
+        <!-- Ações do autor -->
         {% if current_user.is_authenticated and current_user == problema.autor %}
             <hr>
-            <p style="text-align:right;">
-                <a href="#" class="botao azul">Editar</a>
-                <a href="#" class="botao vermelho">Excluir</a>
-            </p>
+            <div style="text-align: right;">
+                <a href="{{ url_for('editar_problema', id=problema.id) }}" class="botao azul">Editar</a>
+                <a href="{{ url_for('excluir_problema', id=problema.id) }}" class="botao vermelho" onclick="return confirm('Tem certeza que deseja excluir este problema?');">Excluir</a>
+            </div>
         {% endif %}
     </div>
 </main>
-
 {% endblock %}
+
