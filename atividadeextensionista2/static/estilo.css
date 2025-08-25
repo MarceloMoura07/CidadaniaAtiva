@@ -234,6 +234,12 @@ form p, form div {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.titulo-grid {
+    margin-bottom: 25px;
+
 }
 
 .patrocinadores {
@@ -250,6 +256,11 @@ form p, form div {
     padding: 5px;
     border-radius: 6px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.text-muted {
+    font-size: 0.8em;
+    color: #6c757d;
 }
 
 /* Mensagens de alerta */

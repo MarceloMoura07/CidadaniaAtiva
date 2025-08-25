@@ -3,6 +3,8 @@ from atividadeextensionista2 import app, database, bcrypt
 from atividadeextensionista2.forms import FormLogin, FormCriarConta, FormCriarProblema
 from atividadeextensionista2.models import Usuario, Problema, Validacao
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_mail import Message
+from atividadeextensionista2 import mail
 import secrets
 from PIL import Image
 import os
@@ -52,18 +54,67 @@ def login():
             flash('E-mail ou senha incorretos.', 'alert-danger')
 
     if form_criarconta.validate_on_submit() and 'botao_submit_criarconta' in request.form:
-        senha_cript = bcrypt.generate_password_hash(form_criarconta.senha.data).decode('utf-8')
-        novo_usuario = Usuario(
-            username=form_criarconta.username.data,
-            email=form_criarconta.email.data,
-            senha=senha_cript
-        )
-        database.session.add(novo_usuario)
-        database.session.commit()
-        flash('Conta criada com sucesso! Faça login.', 'alert-success')
-        return redirect(url_for('login'))
+        usuario_existente = Usuario.query.filter_by(email=form_criarconta.email.data).first()
+        if usuario_existente:
+            flash('E-mail já está cadastrado. Tente outro ou faça login.', 'alert-danger')
+        else:
+            senha_cript = bcrypt.generate_password_hash(form_criarconta.senha.data).decode('utf-8')
+            novo_usuario = Usuario(
+                username=form_criarconta.username.data,
+                email=form_criarconta.email.data,
+                senha=senha_cript
+            )
+            database.session.add(novo_usuario)
+            database.session.commit()
+            flash('Conta criada com sucesso! Faça login.', 'alert-success')
+            return redirect(url_for('login'))
 
     return render_template('login.html', form_login=form_login, form_criarconta=form_criarconta)
+
+# def enviar_email_reset(usuario):
+#     token = usuario.get_reset_token()
+#     msg = Message('Recuperação de Senha - Cidadania Ativa',
+#                   recipients=[usuario.email])
+#     msg.body = f'''Olá {usuario.username},
+#
+# Para redefinir sua senha, clique no link abaixo:
+#
+# {url_for('reset_token', token=token, _external=True)}
+#
+# Se você não solicitou isso, ignore este e-mail.
+# '''
+#     mail.send(msg)
+#
+# @app.route("/reset_senha", methods=['GET', 'POST'])
+# def reset_senha():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('home'))
+#     form = FormSolicitarReset()
+#     if form.validate_on_submit():
+#         usuario = Usuario.query.filter_by(email=form.email.data).first()
+#         if usuario:
+#             enviar_email_reset(usuario)
+#         flash('Se o e-mail existir no sistema, enviamos um link de recuperação.', 'alert-info')
+#         return redirect(url_for('login'))
+#     return render_template('reset_senha.html', form=form)
+#
+
+# @app.route("/reset_senha/<token>", methods=['GET', 'POST'])
+# def reset_token(token):
+#     if current_user.is_authenticated:
+#         return redirect(url_for('home'))
+#     usuario = Usuario.verify_reset_token(token)
+#     if usuario is None:
+#         flash('Token inválido ou expirado', 'alert-warning')
+#         return redirect(url_for('reset_senha'))
+#     form = FormResetarSenha()
+#     if form.validate_on_submit():
+#         senha_cript = bcrypt.generate_password_hash(form.senha.data).decode('utf-8')
+#         usuario.senha = senha_cript
+#         database.session.commit()
+#         flash('Sua senha foi atualizada! Faça login.', 'alert-success')
+#         return redirect(url_for('login'))
+#     return render_template('reset_token.html', form=form)
 
 
 @app.route('/logout')
@@ -171,17 +222,17 @@ def validar_problema(id_problema, tipo):
 
     return redirect(url_for('home'))
 
-@app.route('/problema/<int:id>/editar', methods=['GET', 'POST'])
-@login_required
-def editar_problema(id):
-    # lógica para edição
-    pass
-
-@app.route('/problema/<int:id>/excluir', methods=['POST'])
-@login_required
-def excluir_problema(id):
-    # lógica para exclusão com segurança
-    pass
+# @app.route('/problema/<int:id>/editar', methods=['GET', 'POST'])
+# @login_required
+# def editar_problema(id):
+#     # lógica para edição
+#     pass
+#
+# @app.route('/problema/<int:id>/excluir', methods=['POST'])
+# @login_required
+# def excluir_problema(id):
+#     # lógica para exclusão com segurança
+#     pass
 
 
 
@@ -199,3 +250,14 @@ def relatorio():
     )
 
     return render_template('relatorio.html', problemas=problemas_ordenados)
+
+
+@app.route('/debug_db')
+def debug_db():
+    usuarios = Usuario.query.all()
+    problemas = Problema.query.all()
+
+    return {
+        "usuarios": [u.username for u in usuarios],
+        "problemas": [p.titulo for p in problemas]
+    }

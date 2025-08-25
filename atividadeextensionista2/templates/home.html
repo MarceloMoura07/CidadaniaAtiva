@@ -3,6 +3,7 @@
 {% block title %}Início - Cidadania Ativa{% endblock %}
 
 {% block content %}
+
 <main>
     {% for problema in problemas %}
     <div class="fundo-cinza">
@@ -11,6 +12,7 @@
 
                 <!-- Coluna dos logos -->
                 <div class="coluna-patrocinio">
+                    <h4 class="titulo-grid">Patrocinadores</h4>
                     <div class="patrocinadores">
                         <img src="{{ url_for('static', filename='logos/logo1.png') }}" alt="Logo 1">
                         <img src="{{ url_for('static', filename='logos/logo2.png') }}" alt="Logo 2">
@@ -23,7 +25,7 @@
                     <h2>{{ problema.titulo }}</h2>
                     <img src="{{ url_for('static', filename='imagens_problemas/' + problema.imagem) }}" class="imagem-problema" alt="Imagem do problema">
 
-                    <p class="data-postagem">
+                    <p class="text-muted">
                         Postado em {{ problema.data_criacao.strftime('%d %b %Y') }} por {{ problema.autor.username }}
                     </p>
 
@@ -41,6 +43,7 @@
 
                 <!-- Coluna da descrição -->
                 <div class="coluna-descricao">
+                    <h4 class="titulo-grid">Descrição / Endereço</h4>
                     <p>{{ problema.descricao }}</p>
                     <p><strong>{{ problema.endereco }}</strong></p>
                 </div>

@@ -5,18 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c882956d-64d7-4eed-8618-e1f2a5ebe8cf" name="Changes" comment="Inclusão de páginas: usuário e contato">
-      <change afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/relatorio.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/senhas.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/static/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/static/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/criar_problema.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/criar_problema.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/problema.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/problema.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/usuarios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/atividadeextensionista2/templates/sobre.html" beforeDir="false" afterPath="$PROJECT_DIR$/atividadeextensionista2/templates/sobre.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +62,8 @@
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.forms.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.models.executor&quot;: &quot;Run&quot;,
     &quot;Python.routes.executor&quot;: &quot;Run&quot;,
@@ -115,8 +118,30 @@
       <option name="project" value="LOCAL" />
       <updated>1754015751297</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Inclusão de páginas: usuário e contato">
+      <option name="closed" value="true" />
+      <created>1754100512263</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754100512263</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="commit inicial" />

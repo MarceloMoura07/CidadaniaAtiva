@@ -1,21 +1,46 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
 import sqlalchemy
+from flask_migrate import Migrate
+import locale
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, flash, redirect, url_for
+from flask_mail import Mail, Message
+
+# Tenta definir o locale para Português do Brasil.
+try:
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+except locale.Error:
+    print("Locale pt_BR.UTF-8 não suportado, usando o padrão do sistema.")
 
 # Inicializa o app
 app = Flask(__name__)
 
-# Chave secreta (usada para cookies e sessões)
-app.config['SECRET_KEY'] = '955e2630c4ce08e0b7855eec624f38bc'  # gere com secrets.token_hex(16) se quiser trocar
+load_dotenv()
 
-# Banco de dados: usa PostgreSQL se a variável DATABASE_URL estiver definida, senão usa SQLite local
-if os.getenv("DATABASE_URL"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///atividadeextensionista.db'
+# Segurança
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
+
+# # Email
+# app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+# app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+
+# Configurações do Flask-Mail
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+# app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+# app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
+
+mail = Mail(app)
+
+# Banco (SQLite local, arquivo na pasta do pacote)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'cidadania.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Inicializa extensões
 database = SQLAlchemy(app)
@@ -29,14 +54,15 @@ from atividadeextensionista2 import models
 engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 inspector = sqlalchemy.inspect(engine)
 
-# Cria o banco se não existir a tabela principal
+# Apenas imprime status, não recria banco
 if not inspector.has_table("usuario"):
-    with app.app_context():
-        database.drop_all()
-        database.create_all()
-        print("Base de dados criada")
+    print("Banco ainda não inicializado. Rode 'flask db init/migrate/upgrade'.")
 else:
     print("Base de dados já existente")
+
+
+# Migrações (opcional, mas recomendado)
+migrate = Migrate(app, database)
 
 # Importa as rotas no final, após o app estar configurado
 from atividadeextensionista2 import routes

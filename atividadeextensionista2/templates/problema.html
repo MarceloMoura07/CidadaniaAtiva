@@ -3,13 +3,14 @@
 {% block title %}Problema - Cidadania Ativa{% endblock %}
 
 {% block content %}
+
 <main style="max-width: 800px; margin: 20px auto;">
     <h2 style="text-align: center;">{{ problema.titulo }}</h2>
 
     <div class="fundo-cinza" style="background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
         <p><strong>Descrição:</strong><br>{{ problema.descricao }}</p>
         <p><strong>Endereço:</strong><br>{{ problema.endereco }}</p>
-        <p><strong>Postado em:</strong> {{ problema.data_criacao.strftime('%d/%m/%Y') }}</p>
+        <p><strong>Postado por:</strong> {{ problema.data_criacao.strftime('%d/%m/%Y') }}</p>
         <p><strong>Postado por:</strong> {{ problema.autor.username }}</p>
 
         <!-- Botões de validação -->

@@ -1,6 +1,9 @@
-from atividadeextensionista2 import database, login_manager
+from atividadeextensionista2 import database, login_manager, app
 from flask_login import UserMixin
 from datetime import datetime
+from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from flask import current_app
+
 
 # ========== Função de carregamento do usuário (para o Flask-Login) ==========
 
@@ -18,11 +21,26 @@ class Usuario(database.Model, UserMixin):
     username = database.Column(database.String, nullable=False)
     email = database.Column(database.String, nullable=False, unique=True)
     senha = database.Column(database.String, nullable=False)
-    foto_perfil = database.Column(database.String, default='default.jpg')
+    # foto_perfil = database.Column(database.String, default='default.jpg')
 
     # Relacionamentos
     problemas = database.relationship('Problema', backref='autor', lazy=True)
     validacoes = database.relationship('Validacao', backref='usuario', lazy=True)
+
+    # ========= RECUPERAÇÃO DE SENHA =========
+    # def get_reset_token(self, expires_sec=1800):
+    #     s = Serializer(current_app.config['SECRET_KEY'])
+    #     return s.dumps({'user_id': self.id})
+    #
+    # @staticmethod
+    # def verify_reset_token(token, expires_sec=1800):
+    #     """Valida o token e retorna o usuário se for válido"""
+    #     s = Serializer(current_app.config['SECRET_KEY'])
+    #     try:
+    #         data = s.loads(token, max_age=expires_sec)
+    #     except Exception:
+    #         return None
+    #     return Usuario.query.get(data['user_id'])
 
 
 # ========== Modelo: Problema ==========
@@ -49,10 +67,10 @@ class Problema(database.Model):
     )
 
     def contar_validacoes(self, tipo):
-        """
-        Conta quantas validações de um tipo específico ('existe' ou 'nao_existe') esse problema recebeu.
-        """
-        return len([v for v in self.validacoes if v.tipo == tipo])
+        return Validacao.query.filter_by(
+            id_problema=self.id,
+            tipo=tipo
+        ).count()
 
 
 # ========== Modelo: Validação ==========
