@@ -4,7 +4,6 @@ from atividadeextensionista2.forms import FormLogin, FormCriarConta, FormCriarPr
 from atividadeextensionista2.models import Usuario, Problema, Validacao
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
-from atividadeextensionista2 import mail
 import secrets
 from PIL import Image
 import os
