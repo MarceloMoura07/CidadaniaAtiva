@@ -23,6 +23,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
 
 # Configurações do Flask-Mail
+# As configurações de e-mail estão comentadas, o que está correto para desativar a funcionalidade
 # app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 # app.config['MAIL_PORT'] = 587
 # app.config['MAIL_USE_TLS'] = True
@@ -44,10 +45,11 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'alert-info'
 
+
 # Migrações 
 migrate = Migrate(app, database)
 
-# Este bloco cria o banco de dados e as tabelas
+
 with app.app_context():
     database.create_all()
     print("Base de dados criada ou já existente.")
