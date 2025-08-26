@@ -26,7 +26,13 @@ def salvar_imagem_problema(imagem):
 
 @app.route('/')
 def home():
-    problemas = Problema.query.all()
+    try:
+        problemas = Problema.query.all()
+    except Exception as e:
+        # Se a tabela não existir, retorna uma lista vazia
+        # Isso evita que o app caia no primeiro carregamento
+        print(f"Erro ao carregar problemas: {e}")
+        problemas = []
 
     # Ordena por número de "existe" e depois por data mais recente
     problemas = sorted(
