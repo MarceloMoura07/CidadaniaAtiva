@@ -50,29 +50,35 @@ def login():
     form_criarconta = FormCriarConta()
 
     if form_login.validate_on_submit() and 'botao_submit_login' in request.form:
-        usuario = Usuario.query.filter_by(email=form_login.email.data).first()
-        if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
-            login_user(usuario, remember=form_login.lembrar_dados.data)
-            flash('Login realizado com sucesso!', 'alert-success')
-            return redirect(url_for('home'))
-        else:
-            flash('E-mail ou senha incorretos.', 'alert-danger')
+        try:
+            usuario = Usuario.query.filter_by(email=form_login.email.data).first()
+            if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
+                login_user(usuario, remember=form_login.lembrar_dados.data)
+                flash('Login realizado com sucesso!', 'alert-success')
+                return redirect(url_for('home'))
+            else:
+                flash('E-mail ou senha incorretos.', 'alert-danger')
+        except Exception:
+            flash('Erro ao tentar fazer login. Tente novamente mais tarde.', 'alert-danger')
 
     if form_criarconta.validate_on_submit() and 'botao_submit_criarconta' in request.form:
-        usuario_existente = Usuario.query.filter_by(email=form_criarconta.email.data).first()
-        if usuario_existente:
-            flash('E-mail já está cadastrado. Tente outro ou faça login.', 'alert-danger')
-        else:
-            senha_cript = bcrypt.generate_password_hash(form_criarconta.senha.data).decode('utf-8')
-            novo_usuario = Usuario(
-                username=form_criarconta.username.data,
-                email=form_criarconta.email.data,
-                senha=senha_cript
-            )
-            database.session.add(novo_usuario)
-            database.session.commit()
-            flash('Conta criada com sucesso! Faça login.', 'alert-success')
-            return redirect(url_for('login'))
+        try:
+            usuario_existente = Usuario.query.filter_by(email=form_criarconta.email.data).first()
+            if usuario_existente:
+                flash('E-mail já está cadastrado. Tente outro ou faça login.', 'alert-danger')
+            else:
+                senha_cript = bcrypt.generate_password_hash(form_criarconta.senha.data).decode('utf-8')
+                novo_usuario = Usuario(
+                    username=form_criarconta.username.data,
+                    email=form_criarconta.email.data,
+                    senha=senha_cript
+                )
+                database.session.add(novo_usuario)
+                database.session.commit()
+                flash('Conta criada com sucesso! Faça login.', 'alert-success')
+                return redirect(url_for('login'))
+        except Exception:
+            flash('Erro ao criar conta. Tente novamente mais tarde.', 'alert-danger')
 
     return render_template('login.html', form_login=form_login, form_criarconta=form_criarconta)
 
