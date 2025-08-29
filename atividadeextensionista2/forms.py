@@ -65,4 +65,3 @@ class FormCriarProblema(FlaskForm):
 #     email = StringField('E-mail', validators=[DataRequired(), Email()])
 #     foto_perfil = FileField('Atualizar foto de perfil', validators=[FileAllowed(['jpg', 'png'], 'Apenas imagens .jpg ou .png')])
 #     botao_submit = SubmitField('Salvar alterações')
-
