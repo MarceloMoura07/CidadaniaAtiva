@@ -1,1 +1,1 @@
-web: gunicorn main:app
+web: gunicorn atividadeextensionista2:app
