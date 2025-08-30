@@ -17,7 +17,7 @@ except locale.Error:
 
 # Inicializa o app
 app = Flask(__name__)
-load_dotenv()
+load_dotenv(".env")
 
 # Segurança
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
@@ -29,14 +29,10 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Pega a variável de ambiente
-database_url = os.getenv("DATABASE_URL", "")  # string do Render, ex: postgres://...
-
-# Se não houver DATABASE_URL, usa um SQLite local (arquivo dentro do projeto)
+database_url = os.getenv("DATABASE_URL")
 if not database_url:
     sqlite_path = os.path.join(BASE_DIR, "db.sqlite3")
     database_url = f"sqlite:///{sqlite_path}"
-    # Opcional: cria a pasta se necessário (não estritamente necessário para o arquivo)
-    # os.makedirs(os.path.dirname(sqlite_path), exist_ok=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
