@@ -1,5 +1,6 @@
 Cidadania Ativa
 Um projeto para dar voz à comunidade na resolução de problemas urbanos.
+Acesse o site em: https://cidadaniaativa.onrender.com/
 
 Sobre o Projeto
 O Cidadania Ativa é uma plataforma web desenvolvida em Python com o framework Flask. Seu principal objetivo é ser um canal direto entre a comunidade e a melhoria de espaços públicos. Qualquer pessoa pode se cadastrar para reportar problemas urbanos — como buracos na rua, lixo acumulado ou calçadas danificadas — e a comunidade pode validar a existência desses problemas, dando prioridade àqueles que mais afetam a vida das pessoas.
